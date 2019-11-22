@@ -62,7 +62,7 @@ void WebView::initSignals()
 
 }
 
-void WebView::setPage(QwkWebPage *page)
+void WebView::setPage(QWebPage *page)
 {
     QWebView::setPage(page);
     initSignals();
@@ -89,11 +89,6 @@ void WebView::setSettings(QwkSettings *settings)
         }
     }
 
-}
-
-QwkSettings* WebView::getSettings()
-{
-    return qwkSettings;
 }
 
 void WebView::loadHomepage()
@@ -127,7 +122,7 @@ void WebView::loadCustomPage(QString uri)
         this->load(QUrl(uri));
     }
     if (this->getLoadTimer()) {
-        this->getLoadTimer()->start(qwkSettings->getInt("browser/page_load_timeout"));
+        this->getLoadTimer()->start(qwkSettings->getUInt("browser/page_load_timeout"));
     }
 }
 
@@ -199,7 +194,7 @@ void WebView::handleWindowCloseRequested()
 void WebView::mousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton) {
-        qDebug() << QDateTime::currentDateTime().toString() << "Window Clicked!";
+        qDebug() << "Window Clicked!";
         playSound("event-sounds/window-clicked");
     }
     QWebView::mousePressEvent(event);
@@ -293,7 +288,7 @@ void WebView::resetLoadTimer()
 {
     if (getLoadTimer()) {
         getLoadTimer()->stop();
-        getLoadTimer()->start(qwkSettings->getInt("browser/page_load_timeout"));
+        getLoadTimer()->start(qwkSettings->getUInt("browser/page_load_timeout"));
     }
 }
 
@@ -386,4 +381,10 @@ void WebView::scrollHome()
 {
     QWebFrame* frame = this->page()->mainFrame();
     frame->setScrollPosition(QPoint(0, 0));
+}
+
+bool WebView::shouldInterruptJavaScript()
+{
+    qDebug() << QDateTime::currentDateTime().toString() << "WebView::shouldInterruptJavaScript" ;
+    return false;
 }

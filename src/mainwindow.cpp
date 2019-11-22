@@ -42,7 +42,6 @@
 #include <QDebug>
 #include "config.h"
 #include "mainwindow.h"
-#include "qwk_webpage.h"
 
 #ifdef QT5
 #include <QStandardPaths>
@@ -248,7 +247,7 @@ void MainWindow::init(AnyOption *opts)
     setCentralWidget(view);
 
     view->setSettings(qwkSettings);
-    view->setPage(new QwkWebPage(view));
+    view->setPage(new QWebPage(view));
 
     // --- Disk cache --- //
     if (qwkSettings->getBool("cache/enable")) {
@@ -302,11 +301,7 @@ void MainWindow::init(AnyOption *opts)
     view->settings()->setAttribute(QWebSettings::PluginsEnabled,
         qwkSettings->getBool("browser/plugins")
     );
-    
-    view->settings()->setAttribute(QWebSettings::LocalStorageEnabled, 
-        qwkSettings->getBool("localstorage/enable")
-    );
-    
+
 #if QT_VERSION >= 0x050400
     view->settings()->setAttribute(QWebSettings::Accelerated2dCanvasEnabled, true);
 #endif

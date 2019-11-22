@@ -2,10 +2,6 @@
 
 FakeWebView::FakeWebView(QWidget *parent) : QWebView(parent)
 {
-    this->settings()->setAttribute(QWebSettings::JavascriptEnabled, false);
-    this->settings()->setAttribute(QWebSettings::WebGLEnabled, false);
-    this->settings()->setAttribute(QWebSettings::JavaEnabled, false);
-    this->settings()->setAttribute(QWebSettings::PluginsEnabled, false);
 }
 
 void FakeWebView::setUrl(const QUrl &url)

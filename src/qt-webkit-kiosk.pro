@@ -14,7 +14,7 @@ contains(QT_VERSION, ^5\\.[0-9]+\\..*) {
 CONFIG += console link_pkgconfig
 TARGET = qt-webkit-kiosk
 TEMPLATE = app
-VERSION = 1.99.9
+VERSION = 1.99.7
 
 CONFIG(debug, debug|release) {
 # here comes debug specific statements
@@ -67,7 +67,6 @@ contains(QT_VERSION, ^5\\.[0-9]+\\..*) {
 }
 
     contains(PLAYER, NONE) {
-
         packagesExist(phonon) {
             message('Phonon framework found. Using Phonon-player.')
             DEFINES += PLAYER_PHONON
@@ -76,7 +75,6 @@ contains(QT_VERSION, ^5\\.[0-9]+\\..*) {
             SOURCES += player/phonon.cpp
             HEADERS += player/phonon.h
         }
-
     }
 
     packagesExist($${PKG_TEST}) {
@@ -143,7 +141,6 @@ message(- VERSION: $${VERSION})
 
 SOURCES += main.cpp\
     mainwindow.cpp \
-    qwk_webpage.cpp \
     webview.cpp \
     anyoption.cpp \
     fakewebview.cpp \
@@ -154,7 +151,6 @@ SOURCES += main.cpp\
     qwk_settings.cpp
 
 HEADERS  += mainwindow.h \
-    qwk_webpage.h \
     webview.h \
     anyoption.h \
     config.h \

@@ -36,7 +36,7 @@
 #include "mainwindow.h"
 #include "anyoption.h"
 
-bool setupOptions(AnyOption *cmdopts)
+bool launch(AnyOption *cmdopts)
 {
     cmdopts->addUsage("This is a simple web-browser working in fullscreen kiosk-mode.");
     cmdopts->addUsage("");
@@ -103,7 +103,7 @@ int main(int argc, char * argv[])
     QApplication app(argc, argv);
 
     AnyOption *cmdopts = new AnyOption();
-    if (!setupOptions(cmdopts)) {
+    if (!launch(cmdopts)) {
         return 0;
     }
 
