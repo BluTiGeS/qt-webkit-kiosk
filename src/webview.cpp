@@ -9,7 +9,9 @@
 
 #ifdef QT5
 #include <QNetworkReply>
+#ifndef QT_NO_SSL
 #include <QSslError>
+#endif
 #endif
 
 //#define SHOW_ALSO_OKAY_DEBUG
@@ -27,11 +29,12 @@ WebView::WebView(QWidget* parent): QWebView(parent)
  */
 void WebView::initSignals()
 {
+	#ifndef QT_NO_SSL
     connect(page()->networkAccessManager(),
             SIGNAL(sslErrors(QNetworkReply*, const QList<QSslError> & )),
             this,
             SLOT(handleSslErrors(QNetworkReply*, const QList<QSslError> & )));
-
+	#endif
     connect(page(),
             SIGNAL(windowCloseRequested()),
             this,
@@ -126,7 +129,7 @@ void WebView::loadCustomPage(QString uri)
     }
 }
 
-
+#ifndef QT_NO_SSL
 void WebView::handleSslErrors(QNetworkReply* reply, const QList<QSslError> &errors)
 {
     qDebug() << QDateTime::currentDateTime().toString() << "handleSslErrors: ";
@@ -143,6 +146,7 @@ void WebView::handleSslErrors(QNetworkReply* reply, const QList<QSslError> &erro
         emit qwkNetworkError(reply->error(), QString("Network SSL errors: ") + errStr);
     }
 }
+#endif 
 
 void WebView::handleNetworkReply(QNetworkReply* reply)
 {
